@@ -10,7 +10,7 @@ import data_io
 import PeriodogramEngine
 import sys
 import numpy as np
-sys.path.insert(0,'/home/wojak/pyriodFinder/repo/pyriodAnalyser/trunk/thirdparty')
+sys.path.insert(0,'thirdparty')
 from waveletFunctions import wavelet, wave_signif
 
 def main():
@@ -19,7 +19,7 @@ def main():
     #---------------------------------------------------
     #FIRST STEP:: READ A SIGNAL IN A CSV FILE
     #---------------------------------------------------
-    demo_dataset_reader = data_io.DataReader('testElec.csv')
+    demo_dataset_reader = data_io.DataReader('dataElec.csv')
     
     #---------------------------------------------------
     #SECOND STEP:: SET UP SIGNAL PROPERTIES

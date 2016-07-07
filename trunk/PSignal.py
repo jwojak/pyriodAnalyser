@@ -38,7 +38,7 @@ class PSignal(object):
     #  they are build and checked by constructor and should never be changed after        
     @property
     def time_axis(self):
-        return self.__signal     
+        return self.__time_axis     
 
     @property
     def signal(self):
