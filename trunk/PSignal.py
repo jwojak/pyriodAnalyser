@@ -76,6 +76,7 @@ class PSignal(object):
             self.__is_evenly_sampled = False
             self.samp_freq = np.mean(tab_diff)
             warnings.warn("time axis is unevenly spaced !!! ",UserWarning)
-            print('Info: time axis in unevenly spaced !! estimated (but probably false) samp_fred', self.samp_freq)
+            print('Info: time axis in unevenly spaced !! estimated (but probably false) samp_freq', self.samp_freq)
 
 
+    
