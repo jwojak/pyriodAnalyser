@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 """ Module to compute periodogram of a signal
-    by Fourier Analysis 
+    by Fourier Analysis, Max Entropy, and Lomb Scargle Methods 
 
 @author j. wojak
 """ 
@@ -14,7 +14,6 @@ class PeriodAnalyser(metaclass=ABCMeta):
         self.psig = i_psig #use setter in constructor
         self.conf_level_thresh = i_conf_level_thresh
         
-
     @property
     def psig(self):
         return self.__psig
@@ -33,7 +32,7 @@ class PeriodAnalyser(metaclass=ABCMeta):
             raise ValueError("Confidence level threshold must be in [0 1], (0.95 meaning 95%)")
         else:
             self.__conf_level_thresh = cl
-
+            
     @abstractmethod
     def periodogram_amplitude(self):
         pass
@@ -56,10 +55,13 @@ class FourierAnalyser(PeriodAnalyser):
         """compute periodogram amplitude by fourier transform"""
         spectrum = np.fft.fft(self.psig.signal)
         n = self.psig.signal.size
+        print(n)
+        print(((n-1)/2+1))
+        print('------------------')
         if( n%2 == 0): #even case
             return np.abs(spectrum[1:n/2])
         else: #odd case
-            return np.abs(spectrum[1:((n-1)/2+1)])
+            return np.abs(spectrum[1:np.int(((n-1)/2+1))])
     
     def periodogram_freq(self):
         """compute periodogram frequencies
@@ -77,7 +79,16 @@ class FourierAnalyser(PeriodAnalyser):
 
     def red_noise_limit(self):
         """compute red noise limit"""
-        
+        #step 1 get theoritical red noise
+        freq = self.periodogram_freq()
+        Msp = freq.size;
+        h = np.arange(Msp);
+        alpha2 = self.__estimateLag1Cor__()*self.__estimateLag1Cor__();
+        theo_red_noise = (1.0 - alpha2)/(1.0 - 2.0*self.__estimateLag1Cor__()*np.cos(h*np.pi*2/self.psig.signal.size)+alpha2);
+        #step 2 scale red noise according to confidence level
+        scaled_red_noise  = theo_red_noise*20000
+        return scaled_red_noise
+    
     def white_noise_limit(self):
         """compute white noise limit"""
 

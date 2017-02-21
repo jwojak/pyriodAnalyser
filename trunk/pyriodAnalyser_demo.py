@@ -63,7 +63,10 @@ def main():
     
     plt.figure()
     plt.plot(demo_spectrum.periodogram_freq(),demo_spectrum.periodogram_amplitude())
-
+    plt.hold(True)
+    plt.plot(demo_spectrum.periodogram_freq(),demo_spectrum.red_noise_limit())
+    plt.hold(False)
+    
 
     sig95 = power / sig95  # where ratio > 1, power is significan
     plt.figure()
