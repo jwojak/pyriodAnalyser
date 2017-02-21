@@ -58,7 +58,7 @@ class PSignalTest(unittest.TestCase):
     #test PSignal assignement
     def test_signal_init(self):
         P = PSignal.PSignal(np.array([1,2,1,2]))
-        self.assertSequenceEqual(list(P.time_axis),[1,2,1,2])
+        self.assertSequenceEqual(list(P.signal),[1,2,1,2])
         
     #test whole assignement    
     def test_inconsistant_time_sig_vec(self):
